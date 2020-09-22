@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // fast dev
+    implementation(rootProject.ext.thirddependencies["butterknife"])
+    annotationProcessor rootProject.ext.thirddependencies["butterknife-compiler"]
+
+    // function module
+    implementation project(':corebaselib')
+    implementation project(':comStore')
+
+    // business module
+    implementation project(':printerTemplate')
+    implementation project(':sdkBusiness')
+    implementation project(':comCourier')
+}
